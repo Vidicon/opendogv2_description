@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- #################### versions without origin #################### -->
+  <xacro:macro name="sphere_collision" params="radius">
+    <collision>
+      <origin xyz="0 0 0" />
+      <geometry>
+        <sphere radius="${radius}"/>
+      </geometry>
+    </collision>
+  </xacro:macro>
+
+  <xacro:macro name="cylinder_collision" params="radius length">
+    <collision>
+      <origin xyz="0 0 0" />
+      <geometry>
+        <cylinder length="${length}" radius="${radius}"/>
+      </geometry>
+    </collision>
+  </xacro:macro>
+
+  <xacro:macro name="box_collision" params="size">
+    <collision>
+      <origin xyz="0 0 0" />
+      <geometry>
+        <box size="${size}"/>
+      </geometry>
+    </collision>
+  </xacro:macro>
+
+  <!-- #################### versions with origin #################### -->
+  <xacro:macro name="sphere_collision_with_origin" params="radius xyz">
+    <collision>
+      <origin xyz="${xyz}" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="${radius}"/>
+      </geometry>
+    </collision>
+  </xacro:macro>
+
+  <xacro:macro name="cylinder_collision_with_origin" params="radius length xyz rpy">
+    <collision>
+      <origin xyz="${xyz}" rpy="${rpy}"/>
+      <geometry>
+        <cylinder length="${length}" radius="${radius}"/>
+      </geometry>
+    </collision>
+  </xacro:macro>
+
+  <xacro:macro name="box_collision_with_origin" params="size xyz rpy">
+    <collision>
+      <origin xyz="${xyz}" rpy="${rpy}"/>
+      <geometry>
+        <box size="${size}"/>
+      </geometry>
+    </collision>
+  </xacro:macro>
+
+</robot>

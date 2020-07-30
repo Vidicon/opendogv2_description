@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>opendogv2_description</name>
+  <version>0.0.0</version>
+  <description>
+    opendogv2 is a robot dog designed and build by XRobots (James Bruton),
+    opendogv2_description pachage is the ros robot model description for that robot.
+  </description>
+
+  <maintainer email="bafenijn@gmail.com">Vidicon (Bram Fenijn)</maintainer>
+  <author email="bafenijn@gmail.com">Vidicon (Bram Fenijn)</author>
+
+  <license>Todo</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <exec_depend>joint_state_publisher</exec_depend>
+  <exec_depend>joint_state_publisher_gui</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>rviz</exec_depend>
+  <exec_depend>xacro</exec_depend>
+  <test_depend>roslaunch</test_depend>
+
+</package>

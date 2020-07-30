@@ -1,0 +1,331 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find opendogv2_description)/urdf/collision.xacro" />
+  <xacro:include filename="$(find opendogv2_description)/urdf/inertias.xacro" />
+
+  <material name="green">
+    <color rgba="0.0 0.8 0.0 1.0"/>
+  </material>
+  <material name="red">
+    <color rgba="0.949 0.321 0.274 1.0"/>
+  </material>
+  <material name="white">
+    <color rgba="0.9 0.9 0.9 1.0"/>
+  </material>
+  <material name="grey">
+    <color rgba="0.7 0.7 0.7 1.0"/>
+  </material>
+  <material name="dark_grey">
+    <color rgba="0.35 0.35 0.39 1.0"/>
+  </material>
+  <material name="yellow">
+    <color rgba="1.0 0.78 0 1.0"/>
+  </material>
+
+  <link name="base_link">
+    <visual name="base_link_visual">
+      <origin rpy="0 0 1.57" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://opendogv2_description/meshes/body.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="yellow"/>
+    </visual>
+
+    <xacro:box_collision_with_origin size="0.8 0.3 0.2" xyz="0 0 0" rpy="0 0 0"/>
+    <xacro:box_inertial x="0.8" y="0.3" z="0.2" mass="6"/>
+    
+  </link>
+
+  <xacro:macro name="leg" params="name parent rpy xyz">
+    <link name="${name}_hip">
+      <inertial>
+      <mass value="0.5"/>
+      <origin rpy="0 0 0" xyz="0 0 -0.01"/>
+      <inertia ixx="0.000128166736668271" ixy="0.00000847280366271617" ixz="0.00000223027594210769" iyy="0.000507680569453065" iyz="0" izz="0.000566849494830246"/>
+      </inertial>
+      <visual name="${name}_hip_visual">
+        <origin rpy="0 0 1.57" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://opendogv2_description/meshes/hip1.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="grey"/>
+      </visual>
+    </link>
+
+    <joint name="${name}_hip_joint" type="revolute">
+      <parent link="${parent}"/>
+      <child link="${name}_hip"/>
+      <origin rpy="${rpy}" xyz="${xyz}"/>
+      <axis xyz="1 0 0"/>
+      <limit effort="1000.0" lower="-0.785375" upper="0.785375" velocity="0.5"/>
+    </joint>
+
+    <link name="${name}_upperleg">
+      <inertial>
+      <mass value="0.5"/>
+      <origin rpy="0 0 0" xyz="0 0 -0.01"/>
+      <inertia ixx="0.000128166736668271" ixy="0.00000847280366271617" ixz="0.00000223027594210769" iyy="0.000507680569453065" iyz="0" izz="0.000566849494830246"/>
+      </inertial>
+      <visual name="${name}_hip_visual">
+        <origin rpy="0 0 1.57" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://opendogv2_description/meshes/upperleg1.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="white"/>
+      </visual>
+    </link>
+
+    <joint name="${name}_upperleg_joint" type="revolute">
+      <parent link="${name}_hip"/>
+      <child link="${name}_upperleg"/>
+      <origin rpy="0 0 0" xyz="0 0.08 0"/>
+      <axis xyz="0 1 0"/>
+      <limit effort="1000.0" lower="-2.35" upper="2.35" velocity="0.5"/>
+    </joint>
+
+    <link name="${name}_lowerleg">
+      <inertial>
+      <mass value="0.5"/>
+      <origin rpy="0 0 0" xyz="0 0 -0.01"/>
+      <inertia ixx="0.000128166736668271" ixy="0.00000847280366271617" ixz="0.00000223027594210769" iyy="0.000507680569453065" iyz="0" izz="0.000566849494830246"/>
+      </inertial>
+      <visual name="${name}_hip_visual">
+        <origin rpy="0 0 1.57" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://opendogv2_description/meshes/lowerleg1.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="yellow"/>
+      </visual>
+
+      <xacro:box_collision_with_origin size="0.1 0.04 0.2" xyz="0 0 -0.05" rpy="0 0 0"/>
+      <xacro:sphere_collision_with_origin radius="0.035" xyz="0 -0.07 -0.195"/>
+    
+    </link>
+
+    <joint name="${name}_lowerleg_joint" type="revolute">
+      <parent link="${name}_upperleg"/>
+      <child link="${name}_lowerleg"/>
+      <origin rpy="0 0 0" xyz="0 0 -0.2"/>
+      <axis xyz="0 1 0"/>
+      <limit effort="1000.0" lower="-3.1415" upper="3.1415" velocity="0.5"/>
+    </joint>
+
+  </xacro:macro>
+
+  <xacro:macro name="leg_mirrored" params="name parent rpy xyz">
+    <link name="${name}_hip">
+      <visual name="${name}_hip_visual">
+        <origin rpy="0 0 -1.57" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://opendogv2_description/meshes/hip2.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="grey"/>
+      </visual>
+    </link>
+
+    <joint name="${name}_hip_joint" type="revolute">
+      <parent link="${parent}"/>
+      <child link="${name}_hip"/>
+      <origin rpy="${rpy}" xyz="${xyz}"/>
+      <axis xyz="-1 0 0"/>
+      <limit effort="1000.0" lower="-0.785375" upper="0.785375" velocity="0.5"/>
+    </joint>
+
+    <link name="${name}_upperleg">
+      <visual name="${name}_hip_visual">
+        <origin rpy="0 0 -1.57" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://opendogv2_description/meshes/upperleg2.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="white"/>
+      </visual>
+    </link>
+
+    <joint name="${name}_upperleg_joint" type="revolute">
+      <parent link="${name}_hip"/>
+      <child link="${name}_upperleg"/>
+      <origin rpy="0 0 0" xyz="0 -0.08 0"/>
+      <axis xyz="0 -1 0"/>
+      <limit effort="1000.0" lower="-2.35" upper="2.35" velocity="0.5"/>
+    </joint>
+
+    <link name="${name}_lowerleg">
+      <visual name="${name}_hip_visual">
+        <origin rpy="0 0 -1.57" xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://opendogv2_description/meshes/lowerleg2.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="yellow"/>
+      </visual>
+
+      <xacro:box_collision_with_origin size="0.1 0.04 0.2" xyz="0 0 -0.05" rpy="0 0 0"/>
+      <xacro:sphere_collision_with_origin radius="0.035" xyz="0 -0.07 -0.195"/>
+    
+    </link>
+
+    <joint name="${name}_lowerleg_joint" type="revolute">
+      <parent link="${name}_upperleg"/>
+      <child link="${name}_lowerleg"/>
+      <origin rpy="0 0 0" xyz="0 0 -0.2"/>
+      <axis xyz="0 -1 0"/>
+      <limit effort="1000.0" lower="-3.1415" upper="3.1415" velocity="0.5"/>
+    </joint>
+
+  </xacro:macro>
+
+
+
+  <xacro:leg name="front_left"            parent="base_link" xyz=" 0.265  0.13 0" rpy="0 0 0" />
+  <xacro:leg name="back_right"            parent="base_link" xyz="-0.265 -0.13 0" rpy="0 0 -3.1415" />
+  <xacro:leg_mirrored name="front_right"  parent="base_link" xyz=" 0.265 -0.13 0" rpy="0 0 0" />
+  <xacro:leg_mirrored name="back_left"    parent="base_link" xyz="-0.265  0.13 0" rpy="0 0 -3.1415" />
+
+<!-- 
+  <xacro:backwheel side="right"   parent="base_link" xyz="0 0.185 0.045" />
+  <xacro:backwheel side="left"   parent="base_link" xyz="0 -0.185 0.045" />
+
+
+  <link name="steer">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://opendogv2_description/meshes/steer.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+  </link>
+
+    <joint name="steer_joint" type="revolute">
+      <parent link="base_link"/>
+      <child link="steer"/>
+      <origin rpy="0 0 0" xyz="1.438 0 0"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="1000.0" lower="-1.57" upper="1.57" velocity="0.005"/>
+    </joint>
+
+  <link name="front_wheel">
+    <inertial>
+      <mass value="0.5"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.000128166736668271" ixy="0.00000847280366271617" ixz="0.00000223027594210769" iyy="0.000507680569453065" iyz="0" izz="0.000566849494830246"/>
+    </inertial>
+    <collision>
+      <origin rpy="1.57 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.075" radius="0.115"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin rpy="1.57 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.075" radius="0.115"/>
+      </geometry>
+      <material name="yellow"/>
+    </visual>
+  </link>
+
+  <joint name="front_wheel_joint" type="continuous">
+    <parent link="steer"/>
+    <child link="front_wheel"/>
+    <origin rpy="0 0 0" xyz="0 0 0.115"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+   <link name="forks">
+     <visual name="forks_visual">
+      <origin rpy="0 0 1.57" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://opendogv2_description/meshes/forks.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+
+    <collision name="collision_fork_left">
+      <origin rpy="0 0 0" xyz="0.53   -0.185 0.0575"/>
+      <geometry>
+        <box size="0.95 0.17 0.055"/>
+      </geometry>
+    </collision>
+
+    <collision name="collision_fork_tip_left">
+      <origin rpy="0 0 0" xyz="-0.125 -0.185 0.0575"/>
+      <geometry>
+        <box size="0.12 0.17 0.055"/>
+      </geometry>
+    </collision>
+
+    <collision name="collision_fork_right">
+      <origin rpy="0 0 0" xyz="0.53   0.185 0.0575"/>
+      <geometry>
+        <box size="0.95 0.17 0.055"/>
+      </geometry>
+    </collision>
+
+    <collision name="collision_fork_tip_right">
+      <origin rpy="0 0 0" xyz="-0.125 0.185 0.0575"/>
+      <geometry>
+        <box size="0.12 0.17 0.055"/>
+      </geometry>
+    </collision>
+
+    <collision name="collision_fork_box">
+      <origin rpy="0 0 0" xyz="1.1  0 0.45"/>
+      <geometry>
+        <box size="0.25 0.73 0.82"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="forks_joint" type="prismatic">
+    <parent link="base_link"/>
+    <child link="forks"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="1000.0" lower="0" upper="0.12" velocity="0.05"/>
+  </joint>
+
+  <link name="lidar_front">
+     <visual>
+      <origin rpy="0 0 1.57" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://opendogv2_description/meshes/sick.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="yellow"/>
+    </visual>
+  </link>
+
+  <joint name="lidar_front_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="lidar_front"/>
+    <origin rpy="3.14 0 0" xyz="1.76 0.0 0.08"/>
+  </joint>
+
+
+  <link name="accerion">
+     <visual>
+      <origin rpy="0 0 -1.57" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://opendogv2_description/meshes/accerion.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+  </link>
+
+  <joint name="accerion_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="accerion"/>
+    <origin rpy="0 0 0" xyz="1.66 0.0 0.05"/>
+  </joint>
+
+
+    <link name="lidar_back">
+
+  </link>
+
+  <joint name="lidar_back_joint" type="fixed">
+    <parent link="forks"/>
+    <child link="lidar_back"/>
+    <origin rpy="0 0 3.14" xyz="0.95 0.0 0.13"/>
+  </joint> -->
+</robot>
