@@ -58,7 +58,7 @@
       <child link="${name}_hip"/>
       <origin rpy="${rpy}" xyz="${xyz}"/>
       <axis xyz="1 0 0"/>
-      <limit effort="1000.0" lower="-0.785375" upper="0.785375" velocity="0.5"/>
+      <limit effort="10.0" lower="-0.785375" upper="0.785375" velocity="20.0"/>
     </joint>
 
     <link name="${name}_upperleg">
@@ -81,7 +81,7 @@
       <child link="${name}_upperleg"/>
       <origin rpy="0 0 0" xyz="0 0.08 0"/>
       <axis xyz="0 1 0"/>
-      <limit effort="1000.0" lower="-2.35" upper="2.35" velocity="0.5"/>
+      <limit effort="10.0" lower="-2.35" upper="2.35" velocity="20.0"/>
     </joint>
 
     <link name="${name}_lowerleg">
@@ -108,7 +108,7 @@
       <child link="${name}_lowerleg"/>
       <origin rpy="0 0 0" xyz="0 0 -0.2"/>
       <axis xyz="0 1 0"/>
-      <limit effort="1000.0" lower="-3.1415" upper="3.1415" velocity="0.5"/>
+      <limit effort="10.0" lower="-3.1415" upper="3.1415" velocity="20.0"/>
     </joint>
 
   </xacro:macro>
@@ -129,7 +129,7 @@
       <child link="${name}_hip"/>
       <origin rpy="${rpy}" xyz="${xyz}"/>
       <axis xyz="-1 0 0"/>
-      <limit effort="1000.0" lower="-0.785375" upper="0.785375" velocity="0.5"/>
+      <limit effort="10.0" lower="-0.785375" upper="0.785375" velocity="20.0"/>
     </joint>
 
     <link name="${name}_upperleg">
@@ -147,7 +147,7 @@
       <child link="${name}_upperleg"/>
       <origin rpy="0 0 0" xyz="0 -0.08 0"/>
       <axis xyz="0 -1 0"/>
-      <limit effort="1000.0" lower="-2.35" upper="2.35" velocity="0.5"/>
+      <limit effort="10.0" lower="-2.35" upper="2.35" velocity="20.0"/>
     </joint>
 
     <link name="${name}_lowerleg">
@@ -169,17 +169,17 @@
       <child link="${name}_lowerleg"/>
       <origin rpy="0 0 0" xyz="0 0 -0.2"/>
       <axis xyz="0 -1 0"/>
-      <limit effort="1000.0" lower="-3.1415" upper="3.1415" velocity="0.5"/>
+      <limit effort="10.0" lower="-3.1415" upper="3.1415" velocity="20.0"/>
     </joint>
 
   </xacro:macro>
 
 
 
-  <xacro:leg name="front_left"            parent="base_link" xyz=" 0.265  0.13 0" rpy="0 0 0" />
-  <xacro:leg name="back_right"            parent="base_link" xyz="-0.265 -0.13 0" rpy="0 0 -3.1415" />
-  <xacro:leg_mirrored name="front_right"  parent="base_link" xyz=" 0.265 -0.13 0" rpy="0 0 0" />
-  <xacro:leg_mirrored name="back_left"    parent="base_link" xyz="-0.265  0.13 0" rpy="0 0 -3.1415" />
+  <xacro:leg name="front_left"            parent="base_link" xyz=" 0.265  0.125 0" rpy="0 0 0" />
+  <xacro:leg name="back_right"            parent="base_link" xyz="-0.265 -0.125 0" rpy="0 0 -3.1415" />
+  <xacro:leg_mirrored name="front_right"  parent="base_link" xyz=" 0.265 -0.125 0" rpy="0 0 0" />
+  <xacro:leg_mirrored name="back_left"    parent="base_link" xyz="-0.265  0.125 0" rpy="0 0 -3.1415" />
 
 <!-- 
   <xacro:backwheel side="right"   parent="base_link" xyz="0 0.185 0.045" />
@@ -201,7 +201,7 @@
       <child link="steer"/>
       <origin rpy="0 0 0" xyz="1.438 0 0"/>
       <axis xyz="0 0 1"/>
-      <limit effort="1000.0" lower="-1.57" upper="1.57" velocity="0.005"/>
+      <limit effort="10.0" lower="-1.57" upper="1.57" velocity="0.005"/>
     </joint>
 
   <link name="front_wheel">
@@ -282,7 +282,7 @@
     <child link="forks"/>
     <origin rpy="0 0 0" xyz="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit effort="1000.0" lower="0" upper="0.12" velocity="0.05"/>
+    <limit effort="10.0" lower="0" upper="0.12" velocity="0.05"/>
   </joint>
 
   <link name="lidar_front">
